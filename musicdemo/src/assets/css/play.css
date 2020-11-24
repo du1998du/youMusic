@@ -1,0 +1,222 @@
+.playCont{
+    width: 100%;
+    height: 100%;
+    background: rgb(22, 24, 36);
+    position: relative;
+}
+.playBg{
+    width: 100%;
+    height: 100%;
+    background-image: url(../img//6.jpg);
+    background-repeat: no-repeat;
+    opacity: 1;
+    /* transform: scale(1.5);
+    transform-origin: center center; */
+    filter: blur(30px);
+    background-size: auto 100%;
+    background-color: rgba(0,0,0,.5);
+}
+.playBg:before{
+    content: " ";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(0,0,0,.5);
+}
+.playCont .playMain{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 1.2rem;
+    overflow: hidden;
+    /* z-index: 21; */
+}
+.playCont .playMain .logo{
+    font-size: 16px;
+    color: #fff;
+    line-height: 0.5rem;
+    margin: 0.2rem 0.2rem 0 0;
+}
+.playCont .playMain .playArea{
+    height: 12.14rem;
+    padding-bottom: 0.2rem;
+}
+.playCont .playMain .playArea .playWrap{
+    padding-top: 1.1rem;
+}
+.playCont .playMain .playArea .playWrap .playDisc{
+    width: 5.92rem;
+    height: 5.92rem;
+    margin: 0 auto;
+    position: relative;
+}
+.playCont .playMain .playArea .playWrap .playDisc .playTurn{
+    width: 100%;    
+    height: 100%;
+    background: url(../img/disc.png) no-repeat;
+    background-size: contain;
+}
+.playCont .playMain .playArea .playWrap .playDisc .rollImg{
+    width: 3.68rem;
+    height: 3.68rem;
+    background-color: olivedrab;
+    margin-top: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -1.84rem;
+    margin-top: -1.84rem;
+    border-radius: 50%;
+    overflow: hidden;
+    /* transform: rotate(30deg); */
+    animation: roll 20s linear infinite;
+}
+.playCont .playMain .playArea .playWrap .playDisc .rollImg img{
+    width: 100%;
+    height: 100%;
+}
+.playCont .playMain .playArea .playWrap .playDisc .rollLight{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: url(../img//light.png) no-repeat;
+    background-size: contain;
+    /* transform: rotate(30deg); */
+    animation: roll 20s linear infinite;
+}
+.playCont .playMain .playArea .playWrap .playDisc .playBtn{
+    width: 1.12rem;
+    height: 1.12rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.56rem;
+    margin-top: -0.56rem;
+    background: url(../img/play.png);
+    background-size: contain;
+}
+.playCont .playMain .playArea .playWrap .songInfo{
+    padding: 0 0.7rem;
+    margin-top: 0.5rem;
+    position: relative;
+}
+.playCont .playMain .playArea .playWrap .songInfo h2{
+    text-align: center;
+}
+.playCont .playMain .playArea .playWrap .songInfo .songName{
+    color: #fefefe;
+    font-size: 0.36rem;
+    line-height: 1.1;
+}
+.playCont .playMain .playArea .playWrap .songInfo .singer{
+    color: hsla(0,0%,100%,.6);
+    font-size: 0.32rem;
+}
+.playCont .playMain .playArea .playWrap .songInfo .songScroll{
+    height: 1rem;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-mask: -webkit-linear-gradient(top,#000,#000 70%,rgba(0,0,0,0));
+    margin-top: 0.3rem;
+}
+.playCont .playMain .playArea .playWrap .songInfo .txt{
+    padding-bottom: 0.16rem;
+    color: #fff;
+    text-align: center;
+}
+.musicStreet{
+    margin-top: 0.3rem;
+}
+.musicStreetImg{
+    width: 2rem;
+    height: 0.5rem;
+    background-image: url(../img/musicStreet.png);
+    background-size: contain;
+    margin: 0 auto;
+    border-radius: 25px;
+    border: 1px solid hsla(0,0%,100%,.13);
+}
+.guid{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0.72rem;
+    padding-top: 0.2rem;
+    margin-top: 0.5rem;
+}
+.arrs{
+    width: 0.34rem;
+    height: 0.24rem;
+    background: url(../img/shang.png);
+    background-repeat: no-repeat;
+    background-size: 17px auto;
+    margin:0.4rem auto;
+    animation: shining 1.2s steps(1) infinite
+}
+@keyframes roll{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+@keyframes shining{
+    0% {
+        background-position: 0 0;
+    }
+    15% {
+        background-position: 0 -12px;
+    }
+    30% {
+        background-position: 0 -24px;
+    }
+    45% {
+        background-position: 0 -36px;
+    }
+    60% {
+        background-position: 0 -48px;
+    }
+    75% {
+        background-position: 0 -60px;
+    }
+    90% {
+        background-position: 0 -72px;
+    }
+    100% {
+        background-position: 0 -84px;
+    }
+}
+.footer{
+    /* width: 7.5rem; */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.2rem;
+}
+.footer .footWrap{
+    padding: 0 0.2rem;
+    display: flex;
+}
+.footer .footWrap button{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid rgb(255, 58, 58);
+    border-radius: 40px;
+    font-size: 18px;
+    text-align: center;
+    background: transparent;
+    color: rgb(255, 58, 58);
+
+}
+.footer .footWrap .download{
+    background-color:rgb(255, 58, 58) ;
+    color: #FFF;
+    margin-left: 0.2rem;
+}

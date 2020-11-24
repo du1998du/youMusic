@@ -1,0 +1,83 @@
+html,body{
+    width: 100%;
+    height: 100%;
+}
+#root{
+    width: 100%;
+    height: 100%;
+}
+.mainCom{
+    width: 100%;
+    height: 100%;
+}
+.index .indexCont{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+.index .header{
+    height: 1.68rem;
+    width: calc(100%-20px) ;
+    background: #d43c33;
+    color: #fff;
+    line-height: 1.68rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+.index .header .app{
+    position: relative;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    font-size: 16px;
+    width: 100px;
+    text-align: center;
+    color: #d43c33;
+    background-color: #fff;
+    border-radius: 50px;
+}
+.index .navBar{
+    width: 100%;
+    height: 0.8rem;
+    border-bottom: 1px solid #ccc;
+    line-height: 0.8rem;
+    display: flex;
+    position: relative;
+    background-color: #fff;
+}
+.index .navBar a{
+    flex: 1;
+    text-align: center;
+    font-size: 15px;
+    color: #333;
+}
+.index .navBar a .navTit{
+    max-width: 100%;
+    display: inline-block;
+    height: 100%;
+    padding: 0 5px;
+    position: relative;
+}
+.index .navBar a .navTit span{
+    font-size: 15px;
+}
+.index .navBar a .navTit .border{
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 2px;
+}
+
+.index .active{
+    color: #DD001B;
+}
+.index .active span{
+    color: #DD001B
+}
+.index .active .border{
+    background: #dd001b !important;
+}
