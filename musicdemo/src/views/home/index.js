@@ -109,12 +109,14 @@ class ReCommend extends React.Component {
                     <ul className="rem_ul">
                         {this.state.menuList.map(item => {
                             return (<li key={item.id}>
-                                <div className="imgBox">
-                                    <img src={item.img} alt="" />
-                                    <div className="count">1111</div>
-                                </div>
+                                <NavLink to="/list">
+                                    <div className="imgBox">
+                                        <img src={item.img} alt="" />
+                                        <div className="count">1111</div>
+                                    </div>
+                                    <p>{item.name}</p>
+                                </NavLink>
 
-                                <p>{item.name}</p>
                             </li>)
                         })}
                     </ul>
