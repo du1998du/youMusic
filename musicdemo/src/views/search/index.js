@@ -1,117 +1,137 @@
 import React from 'react'
 import '../../assets/css/search.css'
+// 引入路由相关组件
+import { NavLink } from 'react-router-dom'
 
-import SearchRes from './searchRes'
+// 引入热搜关键词 ,搜索接口
+import { getHotSearchWord, getSearch } from '../../util/axios'
 
 class Search extends React.Component {
     constructor() {
         super()
         this.state = {
-            hotSearchList: [
-                {
-                    id: 1,
-                    searchName: '耗子尾汁'
-                },
-                {
-                    id: 2,
-                    searchName: '执迷不悟'
-                },
-                {
-                    id: 3,
-                    searchName: '陈奕迅新歌'
-                },
-                {
-                    id: 4,
-                    searchName: '杀死那个石家庄人'
-                },
-                {
-                    id: 5,
-                    searchName: '薛之谦'
-                },
-                {
-                    id: 6,
-                    searchName: '林俊杰'
-                },
-                {
-                    id: 7,
-                    searchName: '会不会'
-                },
-                {
-                    id: 8,
-                    searchName: '说散就散'
-                },
-                {
-                    id: 9,
-                    searchName: '笑纳'
-                },
-                {
-                    id: 10,
-                    searchName: '我很好'
-                },
-            ],
-            isShow: false, //清空按钮
+            hotSearchList: [],
             val: '',  // 表单的数据
-            isChange: true  // 组件切换
+            songList: []
         }
+        this.ipt = React.createRef()
     }
-    // 控制清除按钮
-    changeVal(e) {
-        this.setState({
-            val: e.target.value,
-        }, () => {
-            if (this.state.val != '') {
+
+    componentDidMount() {
+        getHotSearchWord().then(res => {
+            // console.log(res);
+            if (res.code === 200) {
                 this.setState({
-                    isShow: true
+                    hotSearchList: res.data.filter((item, i) => i < 10)
                 })
             }
         })
     }
-    // 清空表单数据
-    clearIpt(){
-        this.setState({
-            val: '',
-            isShow: false,
-            isChange: true
+    // 封装去搜索列表
+    goSearchList(keywords) {
+        this.ipt.current.value = keywords;
+        getSearch({ keywords }).then(res => {
+            // console.log(res);
+            if (res.code == 200) {
+                this.setState({
+                    songList: res.result.songs
+                })
+            }
         })
     }
-    // 点击enter  组件切换
-    enter(e){
-        // console.log(e);
-        // console.log(e.keyCode);
-        if(e.keyCode === 13){
-            this.setState({
-                isChange: false
-            })
+    // 点击 清空
+    clear() {
+        // 让输入框变为空
+        this.ipt.current.value = ''
+        // 歌曲列表置为空
+        this.setState({
+            songList: []
+        })
+    }
+    // 点击回车 进行搜索
+    enter(e) {
+        // 判断是不是回车键 并且输入框不能为空
+        if (e.keyCode === 13 && e.target.value !== '') {
+            this.goSearchList(e.target.value)
         }
     }
-
+    // 根据用户的输入  进行搜索
+    changeVal(e) {
+        if (e.target.value === '') {
+            // 如果输入为空， 调取清空
+            this.clear();
+            return
+        }
+        this.goSearchList(e.target.value)
+    }
+    //跳转播放方法
+    toPlay(id) {
+        this.props.history.push(`/play?id=${id}`)
+    }
     render() {
+        // console.log(this.ipt.current);
+        // 判断清除图标是否显示
+        let flag = false
+        if (this.ipt.current) {
+            flag = this.ipt.current.value
+        }
         return (
             <div className="search">
                 <div className="searchCont">
                     <form>
                         <div className="iptBox">
                             <div className="searchIcon"></div>
-                            <input type="text" value={this.state.val} placeholder="搜索歌曲、歌手、专辑" onInput={this.changeVal.bind(this)} onKeyUp={this.enter.bind(this)} />
+                            <input type="text" placeholder="搜索歌曲、歌手、专辑" ref={this.ipt} onKeyUp={this.enter.bind(this)} onChange={this.changeVal.bind(this)} />
                             <div className="clearIcon">
-                                {this.state.isShow ? (<i onClick={this.clearIpt.bind(this)}></i>) : null}
+                                {flag ? (<i onClick={this.clear.bind(this)}></i>) : null}
                             </div>
                         </div>
                     </form>
-                    {this.state.isChange ? (<div className="default">
+                    {/* 热搜词 */}
+                    {/* 判断  搜索歌列表是否为空，为空显示热搜关键词， 反之显示 歌曲列表 */}
+                    {this.state.songList == 0 ? (<div className="default">
                         <div className="hotSearch">
                             <h3 className="searchTit">热门搜索</h3>
                             <ul>
                                 {this.state.hotSearchList.map(item => {
                                     return (
-                                        <li key={item.id}>{item.searchName}</li>
+                                        <li onClick={this.goSearchList.bind(this, item.searchWord)} key={item.searchWord}>{item.searchWord}</li>
                                     )
                                 })}
                             </ul>
                         </div>
-                    </div>) : (<SearchRes></SearchRes>)}
-                    
-                    {/*  */}
+                    </div>) : ''}
+
+                    {/* 搜索列表 */}
+                    <div className="searchRes">
+                        <div className="songList">
+                            <ul>
+                                {this.state.songList.map(item => {
+                                    return (<li key={item.id} onClick={this.toPlay.bind(this, item.id)}>
+                                            <div className="song">
+                                                <div className="sgchf">
+                                                    <div className="songTitle">
+                                                        {item.name}
+                                                        <span className="sgalia"></span>
+                                                    </div>
+                                                    <div className="songInfo">
+                                                        <i className="sq bgIcon"></i>
+                                                        <div className="artist">{item.artists.map((ar, index) => {
+                                                            if (index === item.artists.length - 1) {
+                                                                return (<span key={ar.id}>{ar.name}</span>)
+                                                            } else {
+                                                                return (<span key={ar.id}>{ar.name} / </span>)
+                                                            }
+                                                        })}</div>
+                                                    </div>
+                                                </div>
+                                                <div className="play bgIcon"></div>
+                                            </div>
+                                    </li>)
+                                })}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

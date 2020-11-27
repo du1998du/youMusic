@@ -121,9 +121,10 @@
 }
 .search .searchCont .searchRes .songList ul li .song .sgchf .songTitle{
     font-size: 17px;
-    display: flex;
     white-space: nowrap;
     line-height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .search .searchCont .searchRes .songList ul li .song .sgchf .songTitle .sgalia{
     font-size: 17px;
@@ -137,6 +138,14 @@
     font-size: 12px;
     color: #888;
     line-height: 18px;
+    display: flex;
+    align-items: center;
+}
+.search .searchCont .searchRes .songList ul li .song .sgchf .songInfo .artist{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex:1;
 }
 .search .searchCont .searchRes .songList .bgIcon{
     background: url(../img/icon.png) no-repeat;

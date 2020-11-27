@@ -1,118 +1,90 @@
 import React from 'react'
 import '../../assets/css/recommend.css'
 import { NavLink } from 'react-router-dom'
-
-import imgUrl from '../../assets/img/1.jpg'
-import imgUrl1 from '../../assets/img/2.jpg'
-import imgUrl2 from '../../assets/img/3.jpg'
-import imgUrl3 from '../../assets/img/4.jpg'
 import fLogo from '../../assets/img/fLogo.png'
+
+// 引入 swiper
+import Swiper from "swiper"
+import "swiper/css/swiper.css"
+
+// 引入axios
+import axios from 'axios'
+// 引入封装好的 推荐歌单、最新音乐接口
+import { getRecMenu, getNewMusic, getBanner } from '../../util/axios'
 
 class ReCommend extends React.Component {
     constructor() {
         super();
         this.state = {
-            menuList: [
-                {
-                    id: 1,
-                    img: imgUrl,
-                    name: "欧美丨真诚说唱，被遗忘在世外仙境的珠宝wsdfdsfsdf鼎折覆餗",
-                },
-                {
-                    id: 2,
-                    img: imgUrl1,
-                    name: "我想把这些甜甜的歌都唱给你听",
-                },
-                {
-                    id: 3,
-                    img: imgUrl2,
-                    name: "『精选翻唱』万人血书求完整～",
-                },
-                {
-                    id: 4,
-                    img: imgUrl3,
-                    name: "我对你又何止是执迷不悟",
-                },
-                {
-                    id: 5,
-                    img: imgUrl1,
-                    name: "我想把这些甜甜的歌都唱给你听",
-                },
-                {
-                    id: 6,
-                    img: imgUrl2,
-                    name: "『精选翻唱』万人血书求完整～",
-                },
-            ],
-            songList: [
-                {
-                    id: 1,
-                    name: '失眠飞行',
-                    info: '(原唱：接个吻，开一枪 / 沈以诚 / 薛明媛)',
-                    singer: '一条小团团OvO-失眠飞行'
-                },
-                {
-                    id: 2,
-                    name: 'Never(狼殿下战爱版预告宣传曲)',
-                    singer: '卢苑仪-Never(狼殿下战爱版预告宣传曲)'
-                },
-                {
-                    id: 3,
-                    name: '天性使燃',
-                    singer: 'Higher Brothers-天性使燃'
-                },
-                {
-                    id: 4,
-                    name: '地球上最无聊的下午',
-                    singer: '黄鸿升-地球上最无聊的下午'
-                },
-                {
-                    id: 5,
-                    name: 'Hey Boy',
-                    singer: 'Sia-Hey Boy'
-                },
-                {
-                    id: 6,
-                    name: 'NO关心（日记版）',
-                    singer: '汪睿-NO关心'
-                },
-                {
-                    id: 7,
-                    name: '森林巴士',
-                    singer: '傲七爷-森林巴士'
-                },
-                {
-                    id: 8,
-                    name: '我愿意',
-                    info: '(影视剧《最初的相遇，最后的别离》中文主题曲)',
-                    singer: '摩登兄弟刘宇宁-我愿意'
-                },
-                {
-                    id: 9,
-                    name: '如果当时2020',
-                    info: '(不曾遗忘的符号)',
-                    singer: '许嵩 / 朱婷婷-如果当时2020'
-                },
-                {
-                    id: 10,
-                    name: '面朝大海',
-                    singer: '姚晨 / 福禄寿FloruitShow-面朝大海'
-                }
-            ],
+            menuList: [],
+            songList: [],
+            bannerList: []
         }
+    }
+    componentDidMount() {
+        axios.all([getRecMenu({ limit: 6 }), getNewMusic(), getBanner()]).then(axios.spread((menuRes, musicRes, bannerRes) => {
+
+            // 推荐菜单
+            if (menuRes.code === 200) {
+                this.setState({
+                    menuList: menuRes.result
+                })
+            }
+            // 最新音乐
+            if (musicRes.code === 200) {
+                // console.log(musicRes);
+                this.setState({
+                    songList: musicRes.result
+                })
+            }
+            // 轮播图
+            if (bannerRes.code === 200) {
+                this.setState({
+                    bannerList: bannerRes.banners
+                }, () => {
+                    new Swiper('.swiper-container', {
+                        loop: true,
+                        autoplay: {
+                            delay: 2000,
+                        },
+                        pagination: {
+                            el: '.swiper-pagination',
+                        },
+                    });
+                })
+            }
+        }))
+    }
+    // 跳转播放页
+    goPlay(id) {
+        this.props.history.push(`/play?id=${id}`)
     }
     render() {
         return (
             <div className="recommend">
                 <div className="container">
+                    <div className="banner">
+                        <div className="swiper-container">
+                            <div className="swiper-wrapper">
+                                {this.state.bannerList.map(item => {
+                                    return (
+                                        <div className="swiper-slide" key={item.imageUrl}>
+                                            <img src={item.imageUrl} alt="" />
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <div className="swiper-pagination"></div>
+                        </div>
+                    </div>
                     <div className="rem_title">推荐歌单</div>
                     <ul className="rem_ul">
                         {this.state.menuList.map(item => {
                             return (<li key={item.id}>
-                                <NavLink to="/list">
+                                <NavLink to={'/list?id=' + item.id}>
                                     <div className="imgBox">
-                                        <img src={item.img} alt="" />
-                                        <div className="count">1111</div>
+                                        <img src={item.picUrl} alt="" />
+                                        <div className="count">{(item.playCount / 10000).toFixed(1)}万</div>
                                     </div>
                                     <p>{item.name}</p>
                                 </NavLink>
@@ -124,23 +96,36 @@ class ReCommend extends React.Component {
                     <div className="remd_newsg">
                         <ul>
                             {this.state.songList.map(item => {
-                                return (<li key={item.id}>
-                                    <NavLink to="/play">
-                                        <div className="song">
-                                            <div className="sgchf">
-                                                <div className="songTitle">
-                                                    {item.name}
-                                                    <span className="sgalia">{item.info}</span>
-                                                </div>
-                                                <div className="songInfo">
-                                                    <i className="sq bgIcon"></i>
-                                                    {item.singer}
-                                                </div>
+                                return (<li key={item.id} onClick={this.goPlay.bind(this)}>
+                                    <div className="song">
+                                        <div className="sgchf">
+                                            <div className="songTitle">
+                                                {item.name}
+                                                <span className="sgalia">
+                                                    {item.song.alias.map(temp => {
+                                                        if (temp === '') {
+                                                            return (<span key={temp}></span>)
+                                                        } else {
+                                                            return (<span key={temp}>({temp})</span>)
+                                                        }
+                                                    })}
+                                                </span>
                                             </div>
-                                            <div className="play bgIcon"></div>
-                                        </div>
-                                    </NavLink>
+                                            <div className="songInfo">
+                                                <i className="sq bgIcon"></i>
+                                                <div className="artist">{item.song.artists.map((artist, index) => {
+                                                    // 判断是不是数组最后一个元素
+                                                    if (index === item.song.artists.length - 1) {
+                                                        return (<span key={artist.id}>{artist.name} - {item.name}</span>)
+                                                    } else {
+                                                        return (<span key={artist.id}>{artist.name} / </span>)
+                                                    }
+                                                })}</div>
 
+                                            </div>
+                                        </div>
+                                        <div className="play bgIcon"></div>
+                                    </div>
                                 </li>)
                             })}
                         </ul>

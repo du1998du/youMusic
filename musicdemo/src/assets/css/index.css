@@ -13,19 +13,19 @@ html,body{
 .index .indexCont{
     position: fixed;
     top: 0;
-    width: 100%;
+    width:100%;
     z-index: 10;
 }
 .index .header{
     height: 1.68rem;
-    width: calc(100%-20px) ;
+    padding: 0 10px;
+    /* width: calc(100%-20px) ; */
     background: #d43c33;
     color: #fff;
     line-height: 1.68rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 10px;
 }
 .index .header .app{
     position: relative;

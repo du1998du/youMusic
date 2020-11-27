@@ -62,7 +62,6 @@
 .playCont .playMain .playArea .playWrap .playDisc .rollImg{
     width: 3.68rem;
     height: 3.68rem;
-    background-color: olivedrab;
     margin-top: 10px;
     position: absolute;
     top: 50%;
@@ -72,7 +71,7 @@
     border-radius: 50%;
     overflow: hidden;
     /* transform: rotate(30deg); */
-    animation: roll 20s linear infinite;
+    /* animation: roll 20s linear infinite; */
 }
 .playCont .playMain .playArea .playWrap .playDisc .rollImg img{
     width: 100%;
@@ -87,7 +86,7 @@
     background: url(../img//light.png) no-repeat;
     background-size: contain;
     /* transform: rotate(30deg); */
-    animation: roll 20s linear infinite;
+    /* animation: roll 20s linear infinite; */
 }
 .playCont .playMain .playArea .playWrap .playDisc .playBtn{
     width: 1.12rem;
@@ -99,6 +98,7 @@
     margin-top: -0.56rem;
     background: url(../img/play.png);
     background-size: contain;
+    display: none;
 }
 .playCont .playMain .playArea .playWrap .songInfo{
     padding: 0 0.7rem;
@@ -125,9 +125,11 @@
     margin-top: 0.3rem;
 }
 .playCont .playMain .playArea .playWrap .songInfo .txt{
+    height: 0.48rem;
     padding-bottom: 0.16rem;
     color: #fff;
     text-align: center;
+    line-height: 0.48rem;
 }
 .playCont .playMain .musicStreet{
     margin-top: 0.3rem;
@@ -158,14 +160,14 @@
     margin:0.4rem auto;
     animation: shining 1.2s steps(1) infinite
 }
-@keyframes roll{
+/* @keyframes roll{
     0%{
         transform: rotate(0deg);
     }
     100%{
         transform: rotate(360deg);
     }
-}
+} */
 @keyframes shining{
     0% {
         background-position: 0 0;
@@ -192,18 +194,18 @@
         background-position: 0 -84px;
     }
 }
-.playCont .playMain .footer{
+.playCont .footer{
     /* width: 7.5rem; */
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0.2rem;
 }
-.playCont .playMain .footer .footWrap{
+.playCont  .footer .footWrap{
     padding: 0 0.2rem;
     display: flex;
 }
-.playCont .playMain .footer .footWrap button{
+.playCont  .footer .footWrap button{
     width: 100%;
     height: 40px;
     line-height: 40px;
@@ -215,8 +217,12 @@
     color: rgb(255, 58, 58);
 
 }
-.playCont .playMain .footer .footWrap .download{
+.playCont .footer .footWrap .download{
     background-color:rgb(255, 58, 58) ;
     color: #FFF;
     margin-left: 0.2rem;
+}
+
+.playCont  .cur{
+    color:rgb(255, 58, 58) !important ;
 }
